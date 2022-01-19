@@ -97,7 +97,6 @@ class MeasEngineManager:
             self._right_meridian_spline_widgets_list[i].initialize_splines()
 
     def _initialize_toolkit(self):
-        print (self._files_format)
         if self._files_format == "image":
             self._toolkit = UltrasoundToolkit(self._vtk_scene)
             self._toolkit.set_interactor(self._vtk_scene.get_interactor())
@@ -111,6 +110,9 @@ class MeasEngineManager:
             self._toolkit.set_meshes_list(self._objects_list)
             self._toolkit.set_renderer_list(self._vtk_scene.get_renderer_list())
             self._toolkit.set_scene_elements_list(self._vtk_scene.get_scene_elements_list())
+        else:
+            # send signal
+            return
         self._toolkit.initialize_toolkit()
 
     def load_data(self):
@@ -240,7 +242,11 @@ class MeasEngineManager:
             vtk reader for the appropriate type (image, mesh, ...)
         """
         if ".jpeg" in file_name or ".jpg" in file_name:
-            return self._open_image(file_name)
+            return self._open_jpeg(file_name)
+        elif ".png" in file_name:
+            return self._open_png(file_name)
+        elif ".bmp" in file_name:
+            return self._open_bmp(file_name)
         elif ".dcm" in file_name:
             return self._open_dicom(file_name)
         elif ".vtk" in file_name:
@@ -248,8 +254,22 @@ class MeasEngineManager:
         else:
             return False
 
-    def _open_image(self, file_name):
+    def _open_jpeg(self, file_name):
         reader = vtk.vtkJPEGReader()
+        reader.SetFileName(file_name)
+        reader.Update()
+        self._files_format = "image"
+        return reader.GetOutput()
+
+    def _open_png(self, file_name):
+        reader = vtk.vtkPNGReader()
+        reader.SetFileName(file_name)
+        reader.Update()
+        self._files_format = "image"
+        return reader.GetOutput()
+
+    def _open_bmp(self, file_name):
+        reader = vtk.vtkBMPReader()
         reader.SetFileName(file_name)
         reader.Update()
         self._files_format = "image"

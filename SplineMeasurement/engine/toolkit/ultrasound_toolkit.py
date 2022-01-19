@@ -398,7 +398,7 @@ class UltrasoundToolkit:
         # important note:
         # Because we have zeros list initially, but h and z can not be 0,
         # then we ignore all zeros to find average correctly
-        ls = filter(lambda i: i > 0, ls)
+        ls = list(filter(lambda i: i > 0, ls))
         if len(ls) == 0:
             return 0
         return sum(ls) / len(ls)
