@@ -116,16 +116,34 @@ class GuiMedianWidget(QtWidgets.QWidget):
         self._right_meridian_button.setChecked(state)
 
     def switch_left_endo_interaction_mode(self):
+        self.reset_group(2)
         self._switch_left_endo_interaction_signal.emit()
 
     def switch_right_endo_interaction_mode(self):
+        self.reset_group(0)
         self._switch_right_endo_interaction_signal.emit()
 
     def switch_left_epi_interaction_mode(self):
+        self.reset_group(3)
         self._switch_left_epi_interaction_signal.emit()
 
     def switch_right_epi_interaction_mode(self):
+        self.reset_group(1)
         self._switch_right_epi_interaction_signal.emit()
+
+    def reset_group(self, index):
+        if index != 0 and self._manage_right_endo_spline_button.check_state():
+            self._manage_right_endo_spline_button.default_On()
+            self._switch_right_endo_interaction_signal.emit()
+        if index != 1 and self._manage_right_epi_spline_button.check_state():
+            self._manage_right_epi_spline_button.default_On()
+            self._switch_right_epi_interaction_signal.emit()
+        if index != 2 and self._manage_left_endo_spline_button.check_state():
+            self._manage_left_endo_spline_button.default_On()
+            self._switch_left_endo_interaction_signal.emit()
+        if index != 3 and self._manage_left_epi_spline_button.check_state():
+            self._manage_left_epi_spline_button.default_On()
+            self._switch_left_epi_interaction_signal.emit()
 
     def call_left_meridian(self):
         self._call_left_meridian_signal.emit()

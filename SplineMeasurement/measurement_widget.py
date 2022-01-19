@@ -21,6 +21,7 @@ class MeasurementWidget(QtWidgets.QWidget):
     def __init__(self, parent=None):
         QtWidgets.QWidget.__init__(self, parent)
 
+        self._initialize_info_line()
         self._initialize_vtk_scene_widget()
         self._initialize_engine_manager()
 
@@ -61,8 +62,14 @@ class MeasurementWidget(QtWidgets.QWidget):
         self._vtk_frame = QtWidgets.QFrame()
         self._vtk_scene = VtkMeasScene(self._vtk_frame)
         self._vtk_layer = QtWidgets.QVBoxLayout()
+
         self._vtk_layer.addWidget(self._vtk_scene)
+        self._vtk_layer.addWidget(self._info_line)
         self._vtk_frame.setLayout(self._vtk_layer)
+
+    def _initialize_info_line(self):
+        self._info_line = QtWidgets.QLineEdit(self)
+        self._info_line.setReadOnly(True)
 
     def _initialize_engine_manager(self):
         self._engine_manager = MeasEngineManager()
@@ -122,6 +129,18 @@ class MeasurementWidget(QtWidgets.QWidget):
         self._panel_layer.addWidget(self._stack_widget)
         self._panel_layer.addWidget(self._gui_median_widget)
 
+# INFO LINE TEXT SET:
+
+    def set_info_status(self, text):
+        """
+        Update the state of the info line when is needed
+        Parameters
+        ----------
+        text : str
+            Text to be displayed
+        """
+        self._info_line.setText(text)
+
 # OBJECTS LIST MANAGEMENT:
 
     def start_vtk_scene(self):
@@ -129,6 +148,7 @@ class MeasurementWidget(QtWidgets.QWidget):
         Run the scene. Should be called after the object initialization only
         """
         self._engine_manager.run_the_scene()
+        self.set_info_status("Ready")
 
     def new_list_initialization(self, files_format):
         """
@@ -141,8 +161,10 @@ class MeasurementWidget(QtWidgets.QWidget):
 
         if files_format == "image":
             self._stack_widget.setCurrentIndex(0)
+            self.set_info_status("Data is loaded. Current tool type: image")
         elif files_format == "mesh":
             self._stack_widget.setCurrentIndex(1)
+            self.set_info_status("Data is loaded. Current tool type: mesh")
         else:
             return
         self._stack_widget.show()
@@ -186,10 +208,11 @@ class MeasurementWidget(QtWidgets.QWidget):
         self._engine_manager.save_meridians_dict()
         self._local_storage.upload_data(self._storage_regist_key,
                                         self._engine_manager.get_data_dict())
+        self.set_info_status("Measurements were loaded to the local storage")
 
     def connect_with_storage(self, local_storage):
         """
-        Connect with the local storage to data exchange between packages
+        Connect with the local storage to exchange data between packages
 
         Parameters
         ----------
@@ -206,6 +229,10 @@ class MeasurementWidget(QtWidgets.QWidget):
             self._engine_manager.left_endo_interaction_off()
         else:
             self._engine_manager.left_endo_interaction_on()
+            # print ("Endo left: ", self._gui_median_widget.get_left_endo_mode())
+            # print ("Endo right: ", self._gui_median_widget.get_right_endo_mode())
+            # print ("Epi left: ", self._gui_median_widget.get_left_endo_mode())
+            # print ("Epi right: ", self._gui_median_widget.get_right_endo_mode())
 
     def switch_right_endo_interaction_mode(self):
         if self._gui_median_widget.get_right_endo_mode():
