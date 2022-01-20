@@ -24,7 +24,9 @@ class VtkReconstructionScene(QVTKRenderWindowInteractor):
         self._renderer = vtk.vtkRenderer()
         self.GetRenderWindow().AddRenderer(self._renderer)
         self._interactor = self.GetRenderWindow().GetInteractor()
-        self._interactor.SetInteractorStyle(vtk.vtkInteractorStyleTrackballCamera())
+        self._interactor_style = vtk.vtkInteractorStyleTrackballCamera()
+        self._interactor_style.AutoAdjustCameraClippingRangeOn()
+        self._interactor.SetInteractorStyle(self._interactor_style)
         self._interactor.Initialize()
 
     def set_mesh(self, vtk_mesh, fibers=False):
@@ -53,6 +55,7 @@ class VtkReconstructionScene(QVTKRenderWindowInteractor):
             self._mesh_mapper.SetInputData(self._mesh)
             self._renderer.AddActor(self._mesh_actor)
         self._interactor.Initialize()
+        self._renderer.ResetCamera()
 
     def set_opacity(self, value):
         """

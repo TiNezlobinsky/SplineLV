@@ -22,6 +22,7 @@ class ReconstructionWidget(QtWidgets.QWidget):
 
         self._storage_regist_key = "Reconstruction"
 
+        self._initialize_info_line()
         self._initialize_vtk_scene_widget()
         self._initialize_meridians_load_box()
         self._initialize_reconstruction_box()
@@ -29,8 +30,8 @@ class ReconstructionWidget(QtWidgets.QWidget):
         self._initialize_panel()
 
         self._main_layer = QtWidgets.QHBoxLayout()
-        self._main_layer.addLayout(self._panel_layer, 1)
         self._main_layer.addWidget(self._vtk_frame, 5)
+        self._main_layer.addLayout(self._panel_layer, 1)
 
         self.setLayout(self._main_layer)
 
@@ -81,10 +82,15 @@ class ReconstructionWidget(QtWidgets.QWidget):
 
         self._vtk_layer = QtWidgets.QVBoxLayout()
         self._vtk_layer.addWidget(vtk_scene)
+        self._vtk_layer.addWidget(self._info_line)
         self._vtk_frame.setLayout(self._vtk_layer)
 
         self._engine_manager = ReconEngineManager()
         self._engine_manager.connect_with_scene(vtk_scene)
+
+    def _initialize_info_line(self):
+        self._info_line = QtWidgets.QLineEdit(self)
+        self._info_line.setReadOnly(True)
 
 # INITIALIZATION METHODS:
 
@@ -93,6 +99,18 @@ class ReconstructionWidget(QtWidgets.QWidget):
 
     def connect_with_storage(self, local_storage):
         self._local_storage = local_storage
+
+# INFO LINE TEXT SET:
+
+    def set_info_status(self, text):
+        """
+        Update the state of the info line when is needed
+        Parameters
+        ----------
+        text : str
+            Text to be displayed
+        """
+        self._info_line.setText(text)
 
 # SLOTS:
 # As a reaction on a user actions (push buttons, etc.)

@@ -37,21 +37,22 @@ class MeridianSplineWidget:
         self._epi_editable = False
         self._endo_editable = False
 
-    def initialize_splines(self):
-        spl_seg_dist = 25
+    def _fill_handles_positions(self):
         if self._side == "right":
             side_coeff = 1
         else:
             side_coeff = -1
         self._init_endo_handles_positions = [[0, self._h, 0],
-                                             [side_coeff * 20, 20, 0],
-                                             [side_coeff * 35, 50, 0],
-                                             [side_coeff * 45, 90, 0]]
+                                             [side_coeff * self._h*2, self._h*2, 0],
+                                             [side_coeff * self._h*3, self._h*3, 0],
+                                             [side_coeff * self._h*4, self._h*4, 0]]
         self._init_epi_handles_positions = [[0, 0, 0],
-                                            [side_coeff * 40, 20, 0],
-                                            [side_coeff * 70, 50, 0],
-                                            [side_coeff * 90, 90, 0]]
+                                            [side_coeff * self._h*3, self._h*2, 0],
+                                            [side_coeff * self._h*4, self._h*3, 0],
+                                            [side_coeff * self._h*5.5, self._h*4, 0]]
 
+    def initialize_splines(self):
+        self._fill_handles_positions()
         endo_pattern = self._create_spline_pattern(line_color=self._endo_spline_color, line_width=3,
                                                    handle_color=self._endo_spline_color, handle_opacity=0.4,
                                                    handle_positions=self._init_endo_handles_positions)
@@ -178,6 +179,7 @@ class MeridianSplineWidget:
 # HANDLES MANAGEMENT:
 
     def reset(self):
+        self._fill_handles_positions()
         self._epi_spline.SetNumberOfHandles(4)
         self._epi_spline.set_spline_nodes(self._init_epi_handles_positions)
 
