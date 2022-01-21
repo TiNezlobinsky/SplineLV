@@ -9,14 +9,14 @@ The software was created as a part of my master degree (2017). Some of its tools
 
 The anatomical model used in this project and its spline implementation is based on:
 
-Pravdin, S. A Mathematical Spline-Based Model of Cardiac Left Ventricle Anatomy and Morphology. Computation 2016, 4(4), 42; https://doi.org/10.3390/computation4040042
+> Pravdin, S. A Mathematical Spline-Based Model of Cardiac Left Ventricle Anatomy and Morphology. Computation 2016, 4(4), 42; https://doi.org/10.3390/computation4040042
 
 ## Installation & run
 Here you can find the source code of the project. To start the software run the main_frame.py in terminal (command line):
 
-'''
+```
 python main_frame.py
-'''
+```
 
 or you can mark the main_frame.py as executable python program.  
 
@@ -24,9 +24,9 @@ Before the start you must install all the required packages. The best way to do 
 
 Then in terminal:
 
-'''
+```
 conda install numpy scipy pyqt vtk
-'''
+```
 
 All the packages will be installed.
 
@@ -39,7 +39,7 @@ All the packages will be installed.
 
 ## Full packages description
 
-###SplineMeasurement###
+### SplineMeasurement
 
 The main package to start with. Designed to measure the the left ventricle walls for each of the presented slices using splines. The measured slices will become the basis for the formation of a 3D anatomical model.
 
@@ -53,7 +53,7 @@ Measurement tools may vary depending on uploaded files formats:
 
 Other possible formats: dcm, bmp (image tool), but not tested well.
 
-####Short control description:####
+#### Short control description:
 
 Data:
 
@@ -95,34 +95,26 @@ Comments:
 
 1. Splines used in the package are not "regular" splines used in many graphical packages. Their behavior is closely related to the mathematical formulation of the model and therefore has more restrictions. So, the order of the spline vertices should be preserved, and their location should be in such a way as to preserve the continuity of the spline. If the splines disappear, then try to click several times in the area of their vertices (to interact with the spline object) or tap "Reset" and try to set the vertices again.
 
-**LVSplineReconstruction:**
+### LVSplineReconstruction:
 
-*To reconstruct left ventricle anatomical model based on var-base spline algorithm*
+When all spline measurements for all slices are done, you can switch to the reconstruction widget to assemble 3D anatomical model.
 
-**CUDACubeFiles:**
+Tap "Update" button to load the spline data and then ''Construct" for the Finite-difference mesh. You will see the reconstructured 3D model which can be rotated and zoomed with the vtk engine inside the window.
 
-*To prepare the binary files needed to compute on CUDA-program (Panfilov group)*
+Several parameters can be set to tune the model:
+- psi, phi, gamma - here you can change the model detalization using the special coordinate system (see the paper link in the beginning Readme section). For example, to increase the the number of layers between the epi-endo layers - increase gamma value.
+- gamma0, gamma1 - set the transmural rotational angle for the fibers field. When gamma0 = 0 and gamma1 = 1 - you will get 180&deg; rotational angle.  
 
-**DiffuseFibrosis:**
+Tap "Export" near the "Construct" button to export constructed mesh as vtk file.
 
-*Diffuse fibrosis modeling for a CUDA-program (Panfilov group)*
+### CUDACubeFiles:
 
-## Additions
+Binary files preparation.
 
-**GuiStylizedWidgets:**
+Pass this package if you don't need electrophysiological modeling and don't use weighted scheme.
 
-*New style for a Qt gui widgets*
+### DiffuseFibrosis:
 
-**DataExamples:**
+Diffuse fibrosis distribution.
 
-Contains vtk slices for SplineMeasurement package
-
-## Problems
-
-*LVSplineReconstruction:*
-
-Problems with a delaunay2D vtk algorithm in case of strong curvature of left ventricle
-model gives a bad triangles near the base
-
-Problems with a delaunay2D vtk algorithm for triangulation with a holes. May lead to
-a program crashes
+Pass this package if you don't need electrophysiological modeling and don't use weighted scheme.
