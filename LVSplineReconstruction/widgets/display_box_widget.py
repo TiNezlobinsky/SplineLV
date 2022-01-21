@@ -6,7 +6,7 @@ class DisplayBoxWidget(QtWidgets.QWidget):
 
     #
     _set_opacity_signal = QtCore.pyqtSignal(int, name="callSetOpacity")
-    _set_visual_object_signal = QtCore.pyqtSignal(str, name="callSetVisualObject")
+    _set_visual_object_signal = QtCore.pyqtSignal(int, name="callSetVisualObject")
 
     def __init__(self, parent=None):
         QtWidgets.QWidget.__init__(self, parent)
@@ -41,8 +41,8 @@ class DisplayBoxWidget(QtWidgets.QWidget):
         self._display_list_box.addItem("FiniteElemSurface")
         self._display_list_box.addItem("FibersField")
 
-    def set_visual_object(self, text):
-        self._set_visual_object_signal.emit(text)
+    def set_visual_object(self, index):
+        self._set_visual_object_signal.emit(index)
 
     def set_opacity_value(self, i):
         self._set_opacity_signal.emit(i)  # should be float

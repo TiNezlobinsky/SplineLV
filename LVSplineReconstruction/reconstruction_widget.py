@@ -149,11 +149,11 @@ class ReconstructionWidget(QtWidgets.QWidget):
         self._engine_manager.set_opacity(i / 100.)  # should be float
 
     def set_visual_object(self, text):
-        if text == "FiniteDiffMesh":
+        if text == 0: # "FiniteDiffMesh"
             self._engine_manager.visualize_diff_mesh()
-        elif text == "FiniteElemSurface":
+        elif text == 1: # "FiniteElemSurface"
             self._engine_manager.visualize_elem_surface()
-        elif text == "FibersField":
+        elif text == 2: # "FibersField"
             self._engine_manager.visualize_fibers()
 
 # SETTERS:
