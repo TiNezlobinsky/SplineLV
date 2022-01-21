@@ -120,7 +120,7 @@ class MeasEngineManager:
         Initialize the vtk scene with selected objects (slices)
         """
         # problems with an understanding how the destructors for the vtk object
-        # through the python references are works.
+        # through the python references work.
         # this is a fast fix to prevent old splines appearance after reloading:
         self.inactivate_left_meridian()
         self.inactivate_right_meridian()
@@ -427,60 +427,103 @@ class MeasEngineManager:
 
     @check_initialization
     def left_epi_interaction_on(self):
-        self._left_meridian_spline_widgets_list[self._current_slice_number].epi_spline_interaction_on()
+        try:
+            self._left_meridian_spline_widgets_list[self._current_slice_number].epi_spline_interaction_on()
+        except IndexError:
+            pass
 
     @check_initialization
     def left_epi_interaction_off(self):
-        self._left_meridian_spline_widgets_list[self._current_slice_number].epi_spline_interaction_off()
+        try:
+            self._left_meridian_spline_widgets_list[self._current_slice_number].epi_spline_interaction_off()
+        except IndexError:
+            pass
 
     @check_initialization
     def left_endo_interaction_on(self):
-        self._left_meridian_spline_widgets_list[self._current_slice_number].endo_spline_interaction_on()
+        try:
+            self._left_meridian_spline_widgets_list[self._current_slice_number].endo_spline_interaction_on()
+        except IndexError:
+            pass
 
     @check_initialization
     def left_endo_interaction_off(self):
-        self._left_meridian_spline_widgets_list[self._current_slice_number].endo_spline_interaction_off()
+        try:
+            self._left_meridian_spline_widgets_list[self._current_slice_number].endo_spline_interaction_off()
+        except IndexError:
+            pass
 
     @check_initialization
     def right_epi_interaction_on(self):
-        self._right_meridian_spline_widgets_list[self._current_slice_number].epi_spline_interaction_on()
+        try:
+            self._right_meridian_spline_widgets_list[self._current_slice_number].epi_spline_interaction_on()
+        except IndexError:
+            pass
 
     @check_initialization
     def right_epi_interaction_off(self):
-        self._right_meridian_spline_widgets_list[self._current_slice_number].epi_spline_interaction_off()
+        try:
+            self._right_meridian_spline_widgets_list[self._current_slice_number].epi_spline_interaction_off()
+        except IndexError:
+            pass
 
     @check_initialization
     def right_endo_interaction_on(self):
-        self._right_meridian_spline_widgets_list[self._current_slice_number].endo_spline_interaction_on()
+        try:
+            self._right_meridian_spline_widgets_list[self._current_slice_number].endo_spline_interaction_on()
+        except IndexError:
+            pass
 
     @check_initialization
     def right_endo_interaction_off(self):
-        self._right_meridian_spline_widgets_list[self._current_slice_number].endo_spline_interaction_off()
+        try:
+            self._right_meridian_spline_widgets_list[self._current_slice_number].endo_spline_interaction_off()
+        except IndexError:
+            pass
 
     @check_initialization
     def activate_left_meridian(self):
-        self._left_meridian_spline_widgets_list[self._current_slice_number].activate()
-        self._vtk_widgets_state_dict["left_meridian"] = True
+        try:
+            self._left_meridian_spline_widgets_list[self._current_slice_number].activate()
+            self._vtk_widgets_state_dict["left_meridian"] = True
+        except IndexError:
+            pass
 
     @check_initialization
     def activate_right_meridian(self):
-        self._right_meridian_spline_widgets_list[self._current_slice_number].activate()
-        self._vtk_widgets_state_dict["right_meridian"] = True
+        try:
+            self._right_meridian_spline_widgets_list[self._current_slice_number].activate()
+            self._vtk_widgets_state_dict["right_meridian"] = True
+        except IndexError:
+            pass
 
     @check_initialization
     def inactivate_left_meridian(self):
-        self._left_meridian_spline_widgets_list[self._current_slice_number].inactivate()
+        try:
+            self._left_meridian_spline_widgets_list[self._current_slice_number].inactivate()
+        except IndexError:
+            pass
         self._vtk_widgets_state_dict["left_meridian"] = False
+
 
     @check_initialization
     def inactivate_right_meridian(self):
-        self._right_meridian_spline_widgets_list[self._current_slice_number].inactivate()
+        try:
+            self._right_meridian_spline_widgets_list[self._current_slice_number].inactivate()
+        except IndexError:
+            pass
         self._vtk_widgets_state_dict["right_meridian"] = False
 
     @check_initialization
     def reset_right_meridian(self):
-        self._right_meridian_spline_widgets_list[self._current_slice_number].reset()
+        try:
+            self._right_meridian_spline_widgets_list[self._current_slice_number].reset()
+        except IndexError:
+            pass
 
     @check_initialization
     def reset_left_meridian(self):
-        self._left_meridian_spline_widgets_list[self._current_slice_number].reset()
+        try:
+            self._left_meridian_spline_widgets_list[self._current_slice_number].reset()
+        except IndexError:
+            pass
