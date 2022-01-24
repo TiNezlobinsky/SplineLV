@@ -178,13 +178,13 @@ class MeridianSplineWidget:
 
 # HANDLES MANAGEMENT:
 
-    def reset(self):
+    def reset(self, compute_=True):
         self._fill_handles_positions()
         self._epi_spline.SetNumberOfHandles(4)
-        self._epi_spline.set_spline_nodes(self._init_epi_handles_positions)
+        self._epi_spline.set_spline_nodes(self._init_epi_handles_positions, compute_)
 
         self._endo_spline.SetNumberOfHandles(4)
-        self._endo_spline.set_spline_nodes(self._init_endo_handles_positions)
+        self._endo_spline.set_spline_nodes(self._init_endo_handles_positions, compute_)
 
     def set_epi_spline_handle_position(self):
         position = self._interactor_style.get_picked_position()

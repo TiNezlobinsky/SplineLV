@@ -527,3 +527,9 @@ class MeasEngineManager:
             self._left_meridian_spline_widgets_list[self._current_slice_number].reset()
         except IndexError:
             pass
+
+    def reset_meridians(self):
+        # called by set_h
+        for i in range(len(self._left_meridian_spline_widgets_list)):
+            self._left_meridian_spline_widgets_list[i].reset(False)
+            self._right_meridian_spline_widgets_list[i].reset(False)

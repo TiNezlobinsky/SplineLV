@@ -133,10 +133,11 @@ class RoPsiSplineWidget(vtkSplineWidget):
     def set_psi_interval_points(self, n):
         self.psi_interval_points = n
 
-    def set_spline_nodes(self, node_list):
+    def set_spline_nodes(self, node_list, compute_=True):
         for i in range(len(node_list)):
             self.SetHandlePosition(i, *node_list[i])
-        self.compute()
+        if compute_:
+            self.compute()
 
     def set_h(self, h):
         self.h = h

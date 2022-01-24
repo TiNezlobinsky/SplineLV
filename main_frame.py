@@ -34,19 +34,19 @@ class MainFrame(QtWidgets.QMainWindow):
         self._reconstruction_widget.start_vtk_scene()
         self._reconstruction_widget.connect_with_storage(self._data_store)
 
-        self._cube_visualization_widget = CubeVisualizationWidget(self)
-        self._cube_visualization_widget.start_vtk_scene()
-        self._cube_visualization_widget.connect_with_storage(self._data_store)
+        # self._cube_visualization_widget = CubeVisualizationWidget(self)
+        # self._cube_visualization_widget.start_vtk_scene()
+        # self._cube_visualization_widget.connect_with_storage(self._data_store)
 
-        self._diff_fibrosis_widget = DiffFibrosisWidget(self)
-        self._diff_fibrosis_widget.start_vtk_scene()
-        self._diff_fibrosis_widget.connect_with_storage(self._data_store)
+        # self._diff_fibrosis_widget = DiffFibrosisWidget(self)
+        # self._diff_fibrosis_widget.start_vtk_scene()
+        # self._diff_fibrosis_widget.connect_with_storage(self._data_store)
 
     def _initialize_tab_widgets_list(self):
         self._tab_frame_widget.addTab(self._measurement_widget, "SliceProcessing")
         self._tab_frame_widget.addTab(self._reconstruction_widget, "Reconstruction")
-        self._tab_frame_widget.addTab(self._cube_visualization_widget, "CubeGenerator")
-        self._tab_frame_widget.addTab(self._diff_fibrosis_widget, "DiffFibrosis")
+        # self._tab_frame_widget.addTab(self._cube_visualization_widget, "CubeGenerator")
+        # self._tab_frame_widget.addTab(self._diff_fibrosis_widget, "DiffFibrosis")
 
 
 if __name__ == "__main__":

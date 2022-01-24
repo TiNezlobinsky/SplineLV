@@ -107,14 +107,16 @@ Several parameters can be set to tune the model:
 
 Tap "Export" near the "Construct" button to export constructed mesh as vtk file.
 
+It's better to visualize the full model with Paraview if you want to better see the fiber fields (problems with the fibers visual scaling so far).
+
 ### CUDACubeFiles:
 
-Binary files preparation.
+Binary files preparation (switched off by default).
 
 Pass this package if you don't need electrophysiological modeling and don't use weighted scheme.
 
 ### DiffuseFibrosis:
 
-Diffuse fibrosis distribution.
+Diffuse fibrosis distribution (switched off by default).
 
 Pass this package if you don't need electrophysiological modeling and don't use weighted scheme.

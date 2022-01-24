@@ -55,6 +55,8 @@ class VtkReconstructionScene(QVTKRenderWindowInteractor):
             self._mesh_mapper.SetInputData(self._mesh)
             self._renderer.AddActor(self._mesh_actor)
         self._interactor.Initialize()
+
+    def reset_camera(self):
         self._renderer.ResetCamera()
 
     def set_opacity(self, value):

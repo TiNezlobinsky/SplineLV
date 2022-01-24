@@ -44,6 +44,9 @@ class ReconstructionWidget(QtWidgets.QWidget):
         self._reconstruction_main_menu_widget.callUpload.connect(self.upload)
         self._reconstruction_main_menu_widget.callConstructDiffMesh.connect(self.construct_diff_mesh)
         self._reconstruction_main_menu_widget.callConstructPolySurface.connect(self.construct_poly_surface)
+        self._reconstruction_main_menu_widget.callExportDiffMesh.connect(self.export_diff_mesh)
+        self._reconstruction_main_menu_widget.callExportPolySurface.connect(self.export_poly_surface)
+
         self._display_box_widget.callSetOpacity.connect(self.set_opacity_value)
         self._display_box_widget.callSetVisualObject.connect(self.set_visual_object)
 
@@ -96,6 +99,7 @@ class ReconstructionWidget(QtWidgets.QWidget):
 
     def start_vtk_scene(self):
         self._engine_manager.run_the_scene()
+        self.set_info_status("Ready")
 
     def connect_with_storage(self, local_storage):
         self._local_storage = local_storage
@@ -122,22 +126,26 @@ class ReconstructionWidget(QtWidgets.QWidget):
             return
         self._engine_manager.set_data_dict(data_dict)
         self._reconstruction_main_menu_widget.set_meridians_list(len(data_dict["meridians"]))
+        self.set_info_status("LV meridians were loaded.")
 
     def upload(self):
         self._local_storage.upload_data(self._storage_regist_key,
                                         self._engine_manager.get_reconstructed())
+        self.set_info_status("Model were loaded to the local storage")
 
     def construct_diff_mesh(self):
         self.set_reconstruction_parameters()
         self.set_fibers_field_parameters()
         self._engine_manager.construct_mesh()
         self._engine_manager.visualize_diff_mesh()
+        self.set_info_status("Finite-difference mesh was constructed")
 
     def construct_poly_surface(self):
         self.set_reconstruction_parameters()
         self.set_fibers_field_parameters()
         self._engine_manager.construct_polygonal_surfaces()
         self._engine_manager.visualize_elem_surface()
+        self.set_info_status("Polygonal mesh was constructed")
 
     def export_diff_mesh(self):
         self._engine_manager.write_unstructured_grid()

@@ -57,6 +57,7 @@ class ReconEngineManager:
         Display vertices mesh on the scene
         """
         self._vtk_scene.set_mesh(self._var_z_reconstruction.get_full_mesh())
+        self._vtk_scene.reset_camera()
 
     @check_initialization
     def visualize_elem_surface(self):
@@ -64,6 +65,7 @@ class ReconEngineManager:
         Display polygonal mesh on the scene
         """
         self._vtk_scene.set_mesh(self._polygonal_surface_assembly.get_unstructured_grid())
+        self._vtk_scene.reset_camera()
 
     @check_initialization
     def visualize_fibers(self):
@@ -71,6 +73,7 @@ class ReconEngineManager:
         Display fibers field (vectors) on the scene
         """
         self._vtk_scene.set_mesh(self._var_z_reconstruction.get_full_mesh(), fibers=True)
+        self._vtk_scene.reset_camera()
 
 # VERTEX MESH AND FIBERS CONSTRUCTOR:
 
@@ -279,5 +282,8 @@ class ReconEngineManager:
         # when vtk file is writing (qt encoding?),
         # points are replaced by commas, and it does
         # not match the vtk file format
-        for line in fileinput.input(file_name, inplace=True):
-            print (line.replace(',', '.'),)  # , (comma) is needed to avoid blank lines
+        try:
+            for line in fileinput.input(file_name, inplace=True):
+                print (line.replace(',', '.'),)  # , (comma) is needed to avoid blank lines
+        except Exception:
+            print (">>> Problem with file correction (Debug)")

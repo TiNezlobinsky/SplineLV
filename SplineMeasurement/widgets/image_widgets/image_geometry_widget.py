@@ -43,7 +43,9 @@ class ImageGeometryWidget(QtWidgets.QWidget):
 
     def on_set_h(self):
         self._engine_manager.set_h()
-        self._h_line_edit.setText(str(self._engine_manager.get_scaled_h()))
+        self._h_line_edit.setText(str(round(self._engine_manager.get_scaled_h(), 2)))
+        if self._engine_manager:
+            self._engine_manager.reset_meridians()
 
     def on_ruler(self):
         self._engine_manager.set_ruler_state(self._ruler_button.check_state())
